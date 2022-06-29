@@ -13,7 +13,7 @@ const encodingAESKey = "Your encodingAESKey"; // 小程序或公众号的消息�
 
 let result;
 let salon = new WechatSalon(event, { appid, token, encodingAESKey });
-await salon.run({
+let check = await salon.run({
     subscribe: async res => { // 关注事件
         // 您的逻辑代码
         result = salon.getText("欢迎关注");
@@ -63,5 +63,5 @@ await salon.run({
     },
 });
 
-return result;
+return check || result;
 ```
