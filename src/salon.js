@@ -358,10 +358,11 @@ class WechatSalon {
             let nonce = getNonceStr();
             token = token || this.token;
             let timestamp = new Date().getTime();
+            let encrypt = this.encrypt(data, aesKey, iv, appid);
 
             return "<xml>\n" +
-                "<Encrypt><![CDATA[" + this.encrypt(data, aesKey, iv, appid) + "]]></Encrypt>\n" +
-                "<MsgSignature><![CDATA[" + sha1([token, timestamp, nonce].sort().join("")) + "]]></MsgSignature>\n" +
+                "<Encrypt><![CDATA[" + encrypt + "]]></Encrypt>\n" +
+                "<MsgSignature><![CDATA[" + sha1([token, timestamp, nonce, encrypt].sort().join("")) + "]]></MsgSignature>\n" +
                 "<TimeStamp>" + timestamp + "</TimeStamp>\n" +
                 "<Nonce><![CDATA[" + nonce + "]]></Nonce>\n" +
                 "<xml>";
